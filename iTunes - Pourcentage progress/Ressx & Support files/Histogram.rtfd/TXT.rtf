@@ -1,0 +1,169 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf410
+\readonlydoc1{\fonttbl\f0\fswiss\fcharset77 Helvetica;\f1\fswiss\fcharset77 Helvetica-Bold;\f2\fswiss\fcharset77 Helvetica-BoldOblique;
+\f3\fswiss\fcharset77 Helvetica-Oblique;\f4\fnil\fcharset77 Verdana-Italic;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red102\green102\blue102;\red17\green17\blue17;
+}
+\margl1440\margr1440\vieww10760\viewh14780\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f0\fs84 \cf0 Histogram 
+\fs36  v1.0
+\fs84 \
+
+\fs36 AppleScript for iTunes\
+written by Dan Vanderkam\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs24 \cf0 \
+Find more 
+\f1\b free
+\f0\b0  AppleScripts\
+and info on writing your own\
+at {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/"}}{\fldrslt Doug's AppleScripts for iTunes}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs36 \cf0 This script outputs a histogram of the distribution in length of songs to the clipboard for pasting into a spreadsheet. More info below.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs24 \cf0 \
+
+\f1\b This script is {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/itinfo/donate.php"}}{\fldrslt Donationware}}. If you use it and like it 
+\f2\i please
+\f1\i0  consider making a donation to support my AppleScripting efforts. {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/itinfo/donate.php"}}{\fldrslt Click here}} for more info.
+\f0\b0\fs36 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f1\b\fs24 \cf2 Installation:
+\f0\b0 \cf0 \
+\
+If you installed the files from the downloaded disk image by dragging them to the "Installer", then the AppleScript and this Read Me document have already been installed in your 
+\f3\i \cf3 [user name] > Library > iTunes > Scripts
+\f0\i0 \cf0  folder. The script will appear in iTunes' Script menu, where you can activate it by clicking on its name.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f1\b \cf0 To manually install, if necessary: 
+\f0\b0 Put AppleScripts in your iTunes Scripts folder. This is located in 
+\f3\i \cf3 [user name] > Library > iTunes
+\f0\i0 \cf0 . If there is no folder named "Scripts" there, create one and put the script(s) in it. AppleScripts will then appear in iTunes' Script menu, and can be activated by selecting by name and clicking. Be sure to also save this Read Me document in a safe and convenient place.\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f1\b \cf2 How to use:
+\f0\b0 \cf0 \
+\
+The idea of these scripts is to learn about the distribution in length of the songs you listen to. I was curious about this one day, and didn't discover any existing way to create such a histogram, so I wrote these two scripts.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs36 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f1\b\fs24 \cf0 Histogram\
+
+\f0\b0 This script simply tabulates the length of all the selected songs. It also takes the number of times you've played a song into account. So if you have three songs which are 1:00, 2:00, and 3:00 long, and you listened to them 3, 2, and 1 time respectively, then it would output\
+1:00	3\
+2:00	2\
+3:00	1\
+to the clipboard.\
+\
+
+\f1\b Histogram (Resampled)
+\f0\b0 \
+This is a more complicated script, and will take significantly longer to run, especially if you select your whole iTunes library. The problem with the first script is that, if you paste its results into a spreadsheet, the resulting chart will be extremely jagged. One second is simply too fine a time interval. So this script takes those tabulations and smoothes them out. To do this, instead of just counting ten songs which were 4:01 long, it adds a bell curve centered around 4:01 with the appropriate height to the distribution. When you run the script, it will ask you for the standard deviation to use. A larger standard deviation will result in a smoother histogram, but will also take longer to run.\
+\
+The script took 2\'d03 minutes to create a histogram for the 3000 songs in my collection, running on an eMac/700 MHz. This speed is actually fairly good, given that AppleScript really wasn't designed for mathematical computation. It doesn't even have an exponential function!\
+\
+Once the script has finished running, it will put the results on the clipboard in tab-delimited format, so that they can be directly pasted into a spreadsheet. An x-y scatter plot will then give you the histogram. The image below shows the histogram for my songs. The blue line is for a standard deviation of 5. The purple is for 10.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+\cf0 {{\NeXTGraphic histogram.jpg \width11040 \height10060
+}¬}\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+\cf0 \
+\
+
+\f1\b A few notes
+\f0\b0 \
+\
+If you want to run this script on songs from different computers, you'll have to make a minor change. Usually the scripts weight songs based on how frequently they've been played. But this information is not available for network tracks. So find "the played count of theTrack" in each script and replace it with "1".\
+\
+Also, to save on computation time, these scripts drop any tracks longer than 1000 seconds (16:40) from consideration. If this is unreasonable for your library, you can go into the script and change the line "set maxSecs to 1000" to however many seconds you like.\
+\
+If you found the script useful or have any comments, feel free to contact me at 
+\f1\b danvk@rice.edu
+\f0\b0 .\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f1\b \cf2 Helpful Links:\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f0\b0 \cf0 \
+Click on the underlined URL text:\
+\
+- {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/"}}{\fldrslt Doug's AppleScripts for iTunes}}\
+- {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/itinfo/shortcutkeys.php"}}{\fldrslt Assign Shortcut Keys to AppleScripts}}\
+- {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/itinfo/downloadfaq.php"}}{\fldrslt Download FAQ}} - 
+\f1\b Info on downloading and installing AppleScripts
+\f0\b0 \
+- {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/dougs.rss"}}{\fldrslt Doug's RSS Feed}} - 
+\f1\b Recent site news, script additions and updates
+\f0\b0  (add link to your news reader)\
+- {\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/dougsupdated.rss"}}{\fldrslt 30 Most Recent RSS Feed}} - 
+\f1\b Most recent new and updated scripts
+\f0\b0  (add link to your news reader)\
+\
+
+\f1\b Information and download link for this script is located at:
+\f0\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural\pardirnatural
+{\field{\*\fldinst{HYPERLINK "http://www.dougscripts.com/itunes/scripts/ss.php?sp=histogram"}}{\fldrslt \cf0 http://www.dougscripts.com/itunes/scripts/ss.php?sp=histogram}}\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs20 \cf0 Version History:\
+\
+v1.0 jan 27 2004\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+\cf4 - initial release\
+\
+this doc last updated December 12 06\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs24 \cf0 \
+
+\f1\b If you have any trouble with this script, please email me. Note, however, that I am not its author.
+\f0\b0 \
+My name is Doug Adams\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "mailto:dougscripts@mac.com"}}{\fldrslt \cf2 \ul \ulc2 dougscripts@mac.com}}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs20 \cf0 This software is released "as-is". By using it or modifying it you agree that its author cannot be held responsible or liable for any tragedies resulting thereof.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural\pardirnatural
+\cf0 \CocoaLigature0 This program is free software; you can redistribute it and/or modify it under the terms of the 
+\f1\b GNU General Public License
+\f0\b0  as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\
+\
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\
+\
+Get a copy of the GNU General Public License by writing to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\
+\
+or visit {\field{\*\fldinst{HYPERLINK "http://www.gnu.org/copyleft/gpl.html"}}{\fldrslt http://www.gnu.org/copyleft/gpl.html}}
+\f4\i\fs18 \cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\f0\i0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs20 \cf0 AppleScript, iTunes, and iPod are registered trademarks of {\field{\*\fldinst{HYPERLINK "http://www.apple.com"}}{\fldrslt Apple Computer}}, Inc.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li180\ql\qnatural
+
+\fs24 \cf0 \
+}

@@ -1,0 +1,256 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf190
+{\fonttbl\f0\fnil\fcharset0 Verdana;}
+{\colortbl;\red255\green255\blue255;\red76\green78\blue78;\red0\green0\blue0;\red64\green128\blue0;
+\red0\green22\blue176;\red68\green21\blue176;\red0\green0\blue255;\red108\green5\blue211;}
+\deftab480
+\pard\pardeftab480\slleading20\pardirnatural
+
+\f0\fs24 \cf2 --\cf3 \
+\cf2 --	Created by: AnkhoD\cf3 \
+\cf2 --	Created on: 03/25/14 12:13:27\cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf2 (*\
+\
+Next Up : Prompt for user text input\
+ - Pour ecrire ma note ou num de chapitre\
+ - pour commencer, mettre dans "line1" entre Trackname et "At"\
+\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf2 *)\cf3 \
+\cf2 --\cf3 \
+\cf2 --\cf3 \
+\cf2 --	Logx - 2014-0323 dimanche 23 mars : Added one files per ABx (per album).\cf3 \
+\
+\cf2 --  existant : "Macintosh HD:users:gnelson:Documents:iTunes:iTunes Bookmarks.txt"\cf3 \
+\cf2 --  unix : /Users/AnkhoD/Documents/iTunes\cf3 \
+\cf2 --  term : /Users/AnkhoD/Documents/iTunes\cf3 \
+\cf2 --  url : file:///Users/AnkhoD/Documents/iTunes/\cf3 \
+\cf2 --  "Seagate Momentus XT:Users:AnkhoD:Box Documents:AudioBooks Reading List:"\cf3 \
+\cf2 --\cf3 \
+\cf2 --\cf3 \
+\cf2 --\cf3 \
+\cf2 --\cf3 \
+\
+\pard\pardeftab480\slleading20\pardirnatural
+
+\b \cf3 property
+\b0  \cf4 required_version\cf3  : "11.1.5"\
+\
+
+\b property
+\b0  \cf4 bookmark_file_path\cf3  : "" \cf2 -- Seagate Momentus XT:Users:AnkhoD:Documents:iTunes:\cf3 \
+
+\b property
+\b0  \cf4 no_bookmarks\cf3  : 0\
+
+\b property
+\b0  \cf4 jump_to_position\cf3  : 0\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf2 --\cf3 \
+\cf2 -- property my_title : "Trackographer"\cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+
+\b \cf3 property
+\b0  \cf4 my_docs_folder\cf3  : "iTunes"\
+\
+
+\b global
+\b0  \cf4 path_to_user_documents\cf3  \cf2 -- home/documents (Seagate Momentus XT:Users:AnkhoD:Documents:)\cf3 \
+
+\b global
+\b0  \cf4 path_to_folder_of_text_files\cf3  \cf2 -- "iTunes files" folder in home/documents/"\cf3 \
+
+\b global
+\b0  \cf4 ABx_filename\cf3  \cf2 -- set ABx Album name = ABx_filename = base_file_name\cf3 \
+
+\b global
+\b0  \cf4 current_text_file_name\cf3  \cf2 -- current name of the text file we're writing to\cf3 \
+\
+
+\b global
+\b0  \cf4 file_exists\cf3  \cf2 -- if text file has been created yet\cf3 \
+\
+\
+\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf2 -- set some paths as globals\cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+
+\b \cf3 set
+\b0  \cf4 path_to_user_documents\cf3  
+\b to
+\b0  ((
+\b \cf5 path to
+\b0 \cf3  
+\i \cf6 documents folder
+\i0 \cf3 ) 
+\b of
+\b0  
+\i \cf6 user domain
+\i0 \cf3 ) 
+\b as
+\b0  
+\i \cf7 text
+\i0 \cf3 \
+
+\b set
+\b0  \cf4 path_to_folder_of_text_files\cf3  
+\b to
+\b0  (\cf4 path_to_user_documents\cf3  & \cf4 my_docs_folder\cf3 ) 
+\b as
+\b0  
+\i \cf7 text
+\i0 \cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 \
+\cf2 -- set base_file_name to curalbum etc...\cf3 \
+\
+\cf2 --if not exists my folder in ~/Documents then create\cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+
+\b \cf3 try
+\b0 \
+	
+\b \cf5 do shell script
+\b0 \cf3  "mkdir " & \cf8 quoted form\cf3  
+\b of
+\b0  \cf8 POSIX path\cf3  
+\b of
+\b0  \cf4 path_to_folder_of_text_files\cf3 \
+
+\b end
+\b0  
+\b try
+\b0 \
+\
+\
+\
+
+\b tell
+\b0  
+\i \cf7 application
+\i0 \cf3  "iTunes"\
+	
+\b \cf7 activate
+\b0 \cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 	\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 	
+\b set
+\b0  \cf4 jump_to_position\cf3  
+\b to
+\b0  0\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 	
+\b try
+\b0 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 		\cf2 (*\
+\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf2 		*)\cf3 \
+		\cf2 --		\cf3 \
+		\cf2 --		-- Check if file exist : \cf3 \
+		\cf2 --		\cf3 \
+		\cf2 --		--if not exists my folder in ~/Documents then create\cf3 \
+		\cf2 --			try\cf3 \
+		\cf2 --				do shell script "mkdir " & quoted form of POSIX path of path_to_folder_of_text_files\cf3 \
+		\cf2 --			end try\cf3 \
+		\cf2 --\cf3 \
+		\cf2 --			if not file_exists then -- wouldn't on run, it's set to false\cf3 \
+		\cf2 --					set current_text_file_name to "iTunesLog.taskpaper"\cf3 \
+		\cf2 --					set file_exists to true\cf3 \
+		\cf2 --				end if\cf3 \
+		\cf2 --		\cf3 \
+		\
+		\
+		\cf2 -- Create 1 files per ABx\cf3 \
+		\cf2 -- Donc pour acceder au bookmark d'un ABx, il doit \'eatre dans le lecteur. n'importe quelle track.\cf3 \
+		\cf2 -- ici : set current_text_file_name ?\cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 		
+\b set
+\b0  \cf4 ABx\cf3  
+\b to
+\b0  \cf8 album\cf3  
+\b of
+\b0  \cf8 current track\cf3 \
+		
+\b set
+\b0  \cf4 Author\cf3  
+\b to
+\b0  " by " & \cf8 artist\cf3  
+\b of
+\b0  \cf8 current track\cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 		\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 		
+\b set
+\b0  \cf4 ABx_filename\cf3  
+\b to
+\b0  (\cf4 ABx\cf3  & \cf4 Author\cf3  & ".txt") 
+\b as
+\b0  
+\i \cf7 text
+\i0 \cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 		\cf2 -- If bookmark_file_path is \cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 		
+\b if
+\b0  \cf4 bookmark_file_path\cf3  
+\b is
+\b0  
+\b not
+\b0  (\cf4 bookmark_file_path\cf3  & \cf4 ABx_filename\cf3 ) 
+\b then
+\b0 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 			\
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 			
+\b set
+\b0  \cf4 bookmark_file_path\cf3  
+\b to
+\b0  (\cf4 bookmark_file_path\cf3  & \cf4 ABx_filename\cf3 ) 
+\b as
+\b0  
+\i \cf7 text
+\i0 \cf3  \cf2 -- ici filename duplicate ! \cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 			\cf2 -- je crois que c'est car la variable est re calculer et re ajouter in bookmark_file_path.\cf3 \
+			\cf2 -- essaye de simplement faire condition if exist etc..\cf3 \
+			\cf2 -- if file exist then set bookmark_file_path to bookmark_file_path. (et pas to(bookmark_file_path !&! ABx_filename)\cf3 \
+			\cf2 -- faudra tester si \'e7a duplicate quand jutilise l'app via alfred..\cf3 \
+		
+\b else
+\b0 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 			
+\b set
+\b0  \cf4 bookmark_file_path\cf3  
+\b to
+\b0  \cf4 bookmark_file_path\cf3  
+\b as
+\b0  
+\i \cf7 text
+\i0 \cf3 \
+\pard\pardeftab480\slleading20\pardirnatural
+\cf3 		
+\b end
+\b0  
+\b if
+\b0 \
+		\
+	
+\b end
+\b0  
+\b try
+\b0 \
+\pard\pardeftab480\slleading20\pardirnatural
+
+\b \cf3 end
+\b0  
+\b tell}
